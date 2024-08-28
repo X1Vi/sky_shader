@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://divg31u54nw8x"]
+
+[ext_resource type="Script" path="res://Scripts/clouds.gd" id="2_66tsc"]
+[ext_resource type="Shader" path="res://Shaders/cloud_shader_mesh.gdshader" id="2_npmpk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i6ylu"]
+
+[sub_resource type="Sky" id="Sky_ao6e2"]
+sky_material = SubResource("ShaderMaterial_i6ylu")
+
+[sub_resource type="Environment" id="Environment_mcvjt"]
+background_mode = 2
+background_energy_multiplier = 2.1
+sky = SubResource("Sky_ao6e2")
+ambient_light_color = Color(0.391022, 0.00140369, 0.930394, 1)
+glow_enabled = true
+fog_enabled = true
+volumetric_fog_enabled = true
+adjustment_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0kc7p"]
+render_priority = 0
+shader = ExtResource("2_npmpk")
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/sky_color = Color(0.5, 0.7, 1, 1)
+shader_parameter/cloud_scale = 0.434
+shader_parameter/cloud_density = 0.515
+shader_parameter/time_scale = 0.438
+shader_parameter/edge_softness = 0.071
+
+[sub_resource type="SphereMesh" id="SphereMesh_q41eu"]
+material = SubResource("ShaderMaterial_0kc7p")
+radius = 41.833
+height = 1.07
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mcvjt")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.238364, -0.971176, 0, 0.971176, 0.238364, 0, -9.21171, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.6057, -2.70886)
+light_color = Color(0.758765, 0.50704, 0.110437, 1)
+light_energy = 14.622
+light_indirect_energy = 8.546
+light_volumetric_fog_energy = 9.864
+omni_range = 47.346
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3518, -2.69326)
+mesh = SubResource("SphereMesh_q41eu")
+skeleton = NodePath("../WorldEnvironment")
+script = ExtResource("2_66tsc")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TImeScale" type="HSlider" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.315972
+anchor_top = 0.839506
+anchor_right = 0.746528
+anchor_bottom = 0.895062
+offset_left = -4.0
+offset_top = -56.0
+offset_right = -4.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="CloudDensity" type="HSlider" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.552083
+anchor_top = 0.938272
+anchor_right = 0.982639
+anchor_bottom = 1.01235
+offset_left = -4.0
+offset_top = -56.0
+offset_right = -4.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="CloudScale" type="HSlider" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0798611
+anchor_top = 0.950617
+anchor_right = 0.503472
+anchor_bottom = 1.01235
+offset_left = -4.0
+offset_top = -56.0
+offset_right = -4.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
